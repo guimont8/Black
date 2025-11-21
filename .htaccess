@@ -1,0 +1,31 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Redirect to login if accessing root
+DirectoryIndex index.php
+
+# Prevent directory listing
+Options -Indexes
+
+# PHP Settings
+php_flag display_errors On
+php_value error_reporting E_ALL
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect config files
+<FilesMatch "(database\.php|session\.php)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
